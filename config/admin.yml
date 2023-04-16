@@ -1,0 +1,6 @@
+# Config used by dashboard client side only
+
+language: "en" # Dashboard UI language
+apiBaseUrl: "https://falcano.com/api/v1"
+apiWebSocketUrl: "wss://falcano.com"
+developerMode: true
