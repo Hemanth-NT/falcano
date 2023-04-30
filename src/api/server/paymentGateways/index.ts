@@ -5,6 +5,7 @@ import SettingsService from "../services/settings/settings"
 import LiqPay from "./LiqPay"
 import PayPalCheckout from "./PayPalCheckout"
 import StripeElements from "./StripeElements"
+import RazorPay from "./RazorPay"
 
 const getOptions = orderId => {
   return Promise.all([
@@ -39,6 +40,8 @@ const getPaymentFormSettings = async (orderID: string) => {
       return LiqPay.getPaymentFormSettings(options)
     case "stripe-elements":
       return StripeElements.getPaymentFormSettings(options)
+    case "razorpay":
+      return RazorPay.getPaymentFormSettings(options)
     default:
       return Promise.reject("Invalid gateway")
   }
@@ -57,6 +60,8 @@ const paymentNotification = async (ctx: RouterContext, gateway) => {
     case "paypal-checkout":
       return PayPalCheckout.paymentNotification(options)
     case "liqpay":
+      return LiqPay.paymentNotification(options)
+    case "razorpay":
       return LiqPay.paymentNotification(options)
     default:
       return Promise.reject("Invalid gateway")

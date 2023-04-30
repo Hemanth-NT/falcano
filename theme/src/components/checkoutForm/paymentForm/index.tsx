@@ -3,6 +3,7 @@ import api from "../../../lib/api"
 import LiqPay from "./LiqPay"
 import PayPalCheckout from "./PayPalCheckout"
 import StripeElements from "./StripeElements"
+import RazorPayButton from "./RazorPayChekcout"
 
 interface Props {
   gateway
@@ -73,6 +74,16 @@ const PaymentForm: FC<Props> = props => {
             />
           </div>
         )
+        case "razorpay":
+          return (
+            <div className="payment-form">
+              <RazorPayButton
+                formSettings={formSettings}
+                shopSettings={shopSettings}
+                onPayment={onPayment}
+              />
+            </div>
+          )
       default:
         return (
           <div>

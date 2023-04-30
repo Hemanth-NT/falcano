@@ -1,6 +1,6 @@
 import OrdersService from "../orders/orders"
 import parse from "../../lib/parse"
-import createOrder from "../../paymentGateways/RazorPay"
+import rzp from "../../paymentGateways/RazorPay"
 import * as crypto from "crypto";
 import { ObjectID } from 'mongodb';
 import e from "express";
@@ -23,7 +23,7 @@ class RazorPayService {
             return { status: false, "msg": "order amount is tampered",respCode:400 }
         }
         console.log(totalOrderAmount)
-        let orderResponse:any = await createOrder({
+        let orderResponse:any = await rzp.createOrder({
             "amount":Number(totalOrderAmount)*100,
             "currency": "INR",
             "receipt": order.id

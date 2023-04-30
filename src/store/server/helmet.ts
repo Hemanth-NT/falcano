@@ -25,7 +25,7 @@ export const helmetMiddleware: Middleware = async (ctx, next) => {
     ...array,
   ]
 
-  const stripeURL = "https://checkout.stripe.com"
+  const stripeURL = "https://razorpay.com/"
 
   helmet({
     contentSecurityPolicy: {
@@ -33,7 +33,7 @@ export const helmetMiddleware: Middleware = async (ctx, next) => {
       directives: {
         defaultSrc: join([]),
         scriptSrc: join([stripeURL, `'nonce-${nonce}'`]),
-        imgSrc: join(["data:", "https://*.stripe.com"]),
+        imgSrc: join(["data:", "https://*.razorpay.com"]),
         connectSrc: join([
           stripeURL,
           settings.serverBaseUrl || "*",

@@ -87,7 +87,9 @@ const EditPaymentMethodForm: FC<Props> = props => {
                       floatingLabelFixed
                       floatingLabelText={messages.paymentGateway}
                       onChange={(event, currentValue, prevValue) =>
-                        setGateway(currentValue)
+                        setGateway(event)
+                        //setGateway(currentValue) original code
+
                       }
                     >
                       {paymentGateways}
