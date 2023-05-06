@@ -25,24 +25,46 @@ export const helmetMiddleware: Middleware = async (ctx, next) => {
     ...array,
   ]
 
-  const stripeURL = "https://razorpay.com/"
+  const stripeURL = "https://*.razorpay.com/"
+
+  // helmet({
+  //   contentSecurityPolicy: {
+  //     useDefaults: true,
+  //     directives: {
+  //       defaultSrc: join([]),
+  //       scriptSrc: join([stripeURL, `'nonce-${nonce}'`]),
+  //       imgSrc: join(["data:", "https://*.razorpay.com"]),
+  //       frameAncestors: join(["'self'", "*.razorpay.com"]),
+  //       connectSrc: join([
+  //         stripeURL,
+  //         settings.serverBaseUrl || "*",
+  //         "ws:",
+  //         "wss:",
+  //       ]),
+  //       frameSrc: join([stripeURL]),
+  //       "require-trusted-types-for": buffer ? "'script'" : "",
+  //     },
+  //   },
+  // })(ctx, () => undefined)
 
   helmet({
     contentSecurityPolicy: {
       useDefaults: true,
       directives: {
-        defaultSrc: join([]),
-        scriptSrc: join([stripeURL, `'nonce-${nonce}'`]),
-        imgSrc: join(["data:", "https://*.razorpay.com"]),
-        connectSrc: join([
-          stripeURL,
-          settings.serverBaseUrl || "*",
-          "ws:",
-          "wss:",
-        ]),
-        frameSrc: join([stripeURL]),
-        "require-trusted-types-for": buffer ? "'script'" : "",
+        defaultSrc: ["'self'"],
+        scriptSrc: ["'self'", "'unsafe-inline'", "'nonce-" + nonce + "'", "https://checkout.razorpay.com"],
+        scriptSrcElem: ["'self'", "'unsafe-inline'", "'nonce-" + nonce + "'", "https://checkout.razorpay.com"],
+        imgSrc: ["'self'", "data:", "https://*.razorpay.com"],
+        frameAncestors: ["'self'", "*.razorpay.com"],
+        connectSrc: ["'self'", "https://*.razorpay.com"],
+        fontSrc: ["'self'"],
+        objectSrc: ["'none'"],
+        mediaSrc: ["'none'"],
+        manifestSrc: ["'self'"],
+        baseUri: ["'self'"],
+        formAction: ["'self'"],
+        frameSrc: ["https://*.razorpay.com"],
       },
     },
-  })(ctx, () => undefined)
+  })(ctx, () => undefined);
 }

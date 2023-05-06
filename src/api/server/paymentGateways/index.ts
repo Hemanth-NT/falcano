@@ -62,7 +62,7 @@ const paymentNotification = async (ctx: RouterContext, gateway) => {
     case "liqpay":
       return LiqPay.paymentNotification(options)
     case "razorpay":
-      return LiqPay.paymentNotification(options)
+      return RazorPay.paymentNotification(options)
     default:
       return Promise.reject("Invalid gateway")
   }

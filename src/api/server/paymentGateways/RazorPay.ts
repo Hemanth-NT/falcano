@@ -1,8 +1,8 @@
 import Razorpay from 'razorpay'
 import OrdertTansactionsService from "../services/orders/orderTransactions"
 
-const ID ="rzp_test_PjYfgXc9ucOLuC"
-const SECRET= "gTkfd2mv8FagvHjM6gfHisLa"
+const ID ="rzp_test_1rtxPMszKQGv26"
+const SECRET= "9YHKcH5gZhGcbv8zxpXhk37E"
 
 let rzp = new Razorpay({
   key_id: ID, 
@@ -11,12 +11,23 @@ let rzp = new Razorpay({
 
 const getPaymentFormSettings = options => {
   const { gateway, gatewaySettings, order, amount, currency } = options
-  const formSettings = {
+  let isProduction=true
+  if (gatewaySettings.env === 'production') {
+      isProduction=false
+  }
+    const formSettings = {
     order_id: order.id,
     amount,
     currency,
     email: order.email,
-    public_key: gatewaySettings.public_key,
+    public_key: gatewaySettings.client_id,
+    user_mobile: order.mobile,
+    user_first_name:order.first_name,
+    user_last_name:order.last_name,
+    customer_id:order.customer_id,
+    client_id:gatewaySettings.client_id,
+    is_production: isProduction
+
   }
   return Promise.resolve(formSettings)
 }
@@ -46,10 +57,21 @@ const createOrder= async (options)=>{
   return response;
 }
 
+const processOrderPayment = async ({ order, gatewaySettings, settings }) => {
+  try {
+    
+     console.log(order)
+     console.log(gatewaySettings)
+     console.log(settings)
+  } catch (error) {
+    return false
+  }
+}
 
 
 export default {
   getPaymentFormSettings,
   paymentNotification,
   createOrder,
+  processOrderPayment
 }

@@ -6,7 +6,7 @@ const fs = require('fs');
 
 const router = new Router()
 
-const createOrder: Middleware = async ctx => {
+const createPaymentOrder: Middleware = async ctx => {
     console.log(ctx.request.body)
     // let payload=ctx.request.body
     // let orderId=payload.orderId
@@ -14,7 +14,7 @@ const createOrder: Middleware = async ctx => {
     let rps=new RazorPayService()
     let resp:any = await rps.createOrders(ctx.request.body)
     ctx.status=resp.respCode
-    ctx.message=resp.msg
+    ctx.body=resp
   }
 
   const test: Middleware = async ctx => {
@@ -38,7 +38,7 @@ const createOrder: Middleware = async ctx => {
 router
   .post(
     "/v1/create/order",
-    createOrder
+    createPaymentOrder
   ).get("/v1/hemanth",test)
   .post("/v1/verify/payment",verifyPayment)
 
